@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if current_user.is_authenticated %}
+<div class="container mt-4">
+    <h1 class="title">
+      Welcome, {{ current_user.name }}!
+    </h1>
+</div>
+{% endif %}
+
+{% endblock %}

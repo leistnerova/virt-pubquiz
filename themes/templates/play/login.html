@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <div class="notification is-danger">
+            {{ messages[0] }}
+        </div>
+    {% endif %}
+    {% endwith %}
+
+    <div class="column is-4 is-offset-4 w-50">
+        <h3 class="title">{{ quiz_name }}</h3>
+        <div class="box">
+            <form method="POST">
+                <div class="form-group">
+                    <label for="title">Team</label>
+                    <select class="form-control" name="team_id">
+                        {% for team in teams %}
+                        <option value="{{ team.team_id }}">{{ team.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="name">Your name</label>
+                    <input id="name" class="form-control" type="text" name="name" autofocus="">
+                </div>
+                <div class="form-check">
+                    <input id="editor" name="editor" type="checkbox" value="1" class="form-check-input"/>
+                    <label for="editor" class="form-check-label">&nbsp;&nbsp; As editor</label>
+                </div>
+
+                <div class="form-group float-right">
+                    <button class="btn btn-primary is-block is-info is-large is-fullwidth">Play</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+	<div class="row">
+	<form method="POST" autocomplete="on" class="w-100">
+
+		<div class="form-row">
+            <div class="form-group mr-2">
+                <label>Team name</label>
+            </div>
+            <div class="form-group">
+                <input type="text" id="name" name="name" size="50"/>
+            </div>
+            <div class="form-group ml-4">
+                <button type="submit" class="btn btn-md btn-primary">Add</button>
+            </div>
+        </div>
+	</form>
+</div>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div>
+                <table id="teams" class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Editor</th>
+                        <th>Users</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for team in teams %}
+                        <tr>
+                            <td>{{ team.name }}</td>
+                            <td>{% if team.editor %}{{ team.editor }}{% endif %}</td>
+                            <td>{{ team.get_users() }}</td>
+                            <td class="d-none d-md-table-cell d-lg-table-cell text-right text-nowrap">
+                                <button class="btn btn-primary" id="edit_team_{{ team.team_id }}" type="button">Edit</button>
+                                <button class="btn btn-primary" id="delete_team_{{ team.team_id }}" type="button">Delete</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

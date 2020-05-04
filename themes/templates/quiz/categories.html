@@ -1,0 +1,37 @@
+<div role="tabpanel" class="tab-pane settings-section mt-4" id="categories">
+    <h1>Categories</h1>
+
+    <div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div>
+                <table id="challenges" class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Picture</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for category in quiz.categories %}
+                        <tr>
+                            <td>{{ category.name }}</td>
+                            <td>
+                                {% if category.picture %}
+                                <img src="{{ url_for('main.get_file', name=category.picture) }}" width="100px">
+                                {% endif %}
+                            </td>
+                            <td class="d-none d-md-table-cell d-lg-table-cell text-right text-nowrap">
+                                <button class="btn btn-primary" id="edit_category_{{ category.category_id }}" type="button">Edit</button>
+                                <button class="btn btn-primary" id="delete_category_{{ category.category_id }}" type="button">Delete</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>

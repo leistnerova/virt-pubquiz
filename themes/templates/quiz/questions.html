@@ -1,0 +1,59 @@
+<div role="tabpanel" class="tab-pane settings-section mt-4" id="questions">
+    <h1>Questions</h1>
+
+    <div class="container">
+	<form method="POST" autocomplete="on" class="w-50">
+
+        <input name="quiz_id" type="hidden" value="{% if quiz.quiz_id %} {{ quiz.quiz_id }} {% endif %}"/>
+		<div class="form-group">
+            <label for="title">Category</label>
+            <select class="form-control" name="category">
+                <option value=""></option>
+                {% for category in quiz.categories %}
+                <option value="{{ category.name }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+		</div>
+	</form>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div>
+                <table id="challenges" class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>Task</th>
+                        <th>Picture</th>
+                        <th>Category</th>
+                        <th>Time limit</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for question in quiz.questions %}
+                        <tr>
+                            <td>{{ question.order }}</td>
+                            <td>{{ question.title }}</td>
+                            <td>{{ question.task }}</td>
+                            <td>
+                                {% if question.picture %}
+                                <img src="{{ url_for('main.get_file', name=question.picture) }}" width="100px">
+                                {% endif %}
+                            </td>
+                            <td>{{ question.category }}</td>
+                            <td>{{ question.time_limit }}</td>
+                            <td class="d-none d-md-table-cell d-lg-table-cell text-right text-nowrap">
+                                <button class="btn btn-primary" id="edit_question_{{ question.question_id }}" type="button">Edit</button>
+                                <button class="btn btn-primary" id="delete_question_{{ question.question_id }}" type="button">Delete</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>

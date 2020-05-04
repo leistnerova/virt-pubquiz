@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+    {% set item = actual_item %}
+    <div id='actual-item'>
+    {% include "run/item.html" %}
+    </div>
+</div>
+
+<div class="container">
+    <div class="col-md-12 text-right px-4 py-4">
+        
+        <button type="button" id="btn-category" class="btn btn-md btn-primary" {% if show_category_id %}disabled{%
+            endif %} {% if actual_item.category_id == next_item.category_id %}style="display: none"{% endif %}>Show category</button>
+        {% if not countdown_started %}
+        <button type="button" id="btn-countdown" class="btn btn-md btn-primary">Start countdown</button>
+        {% endif %}
+        {% if next_item %}
+        <button type="button" id="btn-next" class="btn btn-md btn-info" {% if countdown %}disabled{% endif %}>Next</button>
+        {% endif %}
+    </div>
+</div>
+
+<div class="container">
+    {% set item = next_item %}
+    <div id='next-item'>
+    {% if next_item %}
+    {% include "run/item.html" %}
+    {% else %}
+    <h2> Finish </h2>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='util.js') }}"></script>
+    <script src="{{ url_for('static', filename='run.js') }}"></script>
+{% endblock %}

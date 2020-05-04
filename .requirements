@@ -1,0 +1,6 @@
+werkzeug==0.16.0
+flask
+flask-sqlalchemy
+flask-login
+flask-restplus
+flask-session

@@ -1,0 +1,39 @@
+
+<div role="tabpanel" class="tab-pane settings-section active mt-4" id="quiz">
+    {% with messages = get_flashed_messages() %}
+        {% for message in messages %}
+            <div class="alert alert-success alert-dismissable" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endwith %}
+    <h1>Quiz settings</h1>
+    <hr>
+
+	<form method="POST" autocomplete="on" class="w-100">
+
+        <input name="quiz_id" type="hidden" value="{% if quiz.quiz_id %} {{ quiz.quiz_id }} {% endif %}"/>
+		<div class="form-group">
+				<label for="title">Title</label>
+                <input id="title" name="title" type="text" class="form-control" required {% if quiz.title %}value="{{ quiz.title }}"{% endif %}/>
+		</div>
+		<div class="form-row">
+            <div class="form-group col-md-5">
+				<label for="quiz_type">Type</label>
+                <input id="quiz_type" name="quiz_type" type="text" class="form-control" required {% if quiz.quiz_type %}value="{{ quiz.quiz_type }}"{% endif %}/>
+            </div>
+            <div class="form-group">
+                    <label for="time_limit">Time limit (s)</label>
+                    <input id="time_limit" name="time_limit" type="text" size=3 class="form-control" required {% if quiz.time_limit %}value="{{ quiz.time_limit }}"{% endif %}/>
+            </div>
+		</div>
+		<div class="form-group">
+            <div class="form-check">
+                <input id="is_active" name="is_active" type="checkbox" value="1" class="form-check-input" {% if quiz.is_active %}checked{% endif %}/>
+				<label for="is_active" class="form-check-label">&nbsp;&nbsp; Active</label>
+            </div>
+		</div>
+
+		<button type="submit" class="btn btn-md btn-primary float-right">Update</button>
+	</form>
+</div>

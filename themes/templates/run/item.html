@@ -1,0 +1,20 @@
+<div class="card {% if item.actual %}border-success{% else %}border-info{% endif %} mb-2 pb-2">
+    {% if not item.question_id and not item.category_id%}
+        <h3>FINISH</h3>
+    {% else %}
+        <div class="card-header">{{ item.title }}</div>
+        <div class="card-body">
+            {% if item.category %}
+            <p class="card-text"> <b>Category</b>: {{ item.category }} </p>
+            {% endif %}
+            <p class="card-text">
+              <pre>{{ item.task }}</pre>
+            </p>
+        </div>
+        {% if item.picture %}
+        <div class="text-center">
+        <img class="card-img-bottom" src="{{ url_for('main.get_file', name=item.picture) }}" alt="{{ item.picture }}" style="max-width: 50%">
+        </div>
+        {% endif %}
+    {% endif %}
+</div>

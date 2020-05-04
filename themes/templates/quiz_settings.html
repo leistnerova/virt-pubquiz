@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-3">
+			<ul class="nav nav-pills flex-column">
+				<li class="nav-item">
+					<a class="nav-link rounded-0 active border" href="#quiz" role="tab" data-toggle="tab">Quiz</a>
+					<a class="nav-link rounded-0 border border-top-0" href="#categories" role="tab" data-toggle="tab">Categories</a>
+					<a class="nav-link rounded-0 border border-top-0" href="#questions" role="tab" data-toggle="tab">Questions</a>
+					<a class="nav-link rounded-0 border border-top-0" href="#import" role="tab" data-toggle="tab">Import</a>
+				</li>
+			</ul>
+		</div>
+
+		<div class="col-md-9">
+			<div class="tab-content">
+				{% include "quiz/quiz.html" %}
+				{% include "quiz/categories.html" %}
+				{% include "quiz/questions.html" %}
+				{% include "quiz/import.html" %}
+			</div>
+		</div>
+	</div>
+</div>
+
+
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

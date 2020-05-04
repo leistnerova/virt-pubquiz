@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>PubQuiz</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="/themes/img/favicon.ico"
+		  type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.spacelab.css') }}">
+</head>
+<body>
+	<nav class="navbar navbar-expand-md navbar-light bg-light static-top">
+		<div class="container">
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#base-navbars"
+					aria-controls="base-navbars" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="base-navbars">
+				<ul class="navbar-nav ml-auto">
+                    {% if current_user.is_authenticated %}
+						<li class="nav-item">
+                            <a class="nav-link {% if request.path == '/teams' %} active {% endif %}" href="{{ url_for('team.list') }}">Teams</a>
+						</li>
+						<li class="nav-item">
+                            <a class="nav-link {% if request.path == '/run_quiz' %} active {% endif %}" href="{{ url_for('quiz.run') }}">Run quiz</a>
+						</li>
+						<li class="nav-item">
+                            <a class="nav-link {% if request.path == '/settings' %} active {% endif %}" href="{{ url_for('quiz.settings') }}">Quiz settings</a>
+						</li>
+                        <li class="nav-item">
+							<a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
+						</li>
+                    {% else %}
+						<li class="nav-item">
+                            <a class="nav-link {% if request.path == '/play' %} active {% endif %}" href="{{ url_for('play.index') }}">Play</a>
+						</li>
+                        {% if session['team_user'] %}
+						<li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('play.stop') }}">Leave</a>
+						</li>
+                        {% endif %}
+						<li class="nav-item">
+							<a class="nav-link{% if request.path == '/login' %} active {% endif %}" href="{{ url_for('auth.login') }}">Login</a>
+						</li>
+                    {% endif %}
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<main role="main">
+		{% block content %}
+		{% endblock %}
+	</main>
+
+    <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}"></script>
+	{% block scripts %}
+	{% endblock %}
+
+</body>
+</html>

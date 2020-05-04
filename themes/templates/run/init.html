@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <div class="alert alert-warning" role="alert">
+        Quiz is not active yet.
+    </div>
+</div>
+
+{% if category %}
+<div class="container mt-4">
+    {% set item = category %}
+    {% include "run/item.html" %}
+</div>
+{% endif %}
+
+<div class="container">
+    <div class="col-md-12 text-right px-4 py-4">
+        <form method="POST" class="w-100" action="{{ url_for('quiz.activate') }}">
+            {% if category %}
+            <button type="button" id="btn-category" class="btn btn-md btn-primary" {% if show_category_id %}disabled{% endif %}>Show category</button>
+            {% endif %}
+            <button type="submit" id="btn-next" class="btn btn-md btn-success" >Activate</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='run_init.js') }}"></script>
+{% endblock %}
