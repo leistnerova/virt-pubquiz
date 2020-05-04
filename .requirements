@@ -4,3 +4,5 @@ flask-sqlalchemy
 flask-login
 flask-restplus
 flask-session
+psycopg2
+PyYAML

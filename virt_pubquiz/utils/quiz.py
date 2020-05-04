@@ -91,8 +91,11 @@ class QuizImport:
             dict: question definition
         """
         from_dir = join(self.import_dir, from_dir, self.questions_dir)
-        with open(join(from_dir, file_name), 'r') as stream:
-            return yaml.safe_load(stream)
+        try:
+            with open(join(from_dir, file_name), 'r') as stream:
+                return yaml.safe_load(stream)
+        except:
+            pass
         return {}
 
     def import_file(self, from_dir, file_name, subdir):
@@ -111,6 +114,7 @@ class QuizBase:
     categories = []
     questions = []
     from_dir = None
+    is_active = None
 
     def get_db_obj(self):
         res = self._model()
