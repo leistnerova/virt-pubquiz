@@ -77,6 +77,14 @@ $(document).ready(function(){
                 }
             });
         }
-    }, 2000);
+
+        // load members
+        $.ajax({
+            url: '/api/teams/' + $('#team-id').val() + '/members',
+            success: function (data) {
+                $('#members').text(data);
+            }
+        });
+    }, 1000);
 });
 

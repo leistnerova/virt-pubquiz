@@ -26,6 +26,9 @@
                             <a class="nav-link {% if request.path == '/run_quiz' %} active {% endif %}" href="{{ url_for('quiz.run') }}">Run quiz</a>
 						</li>
 						<li class="nav-item">
+                            <a class="nav-link {% if request.path == '/results' %} active {% endif %}" href="{{ url_for('quiz.results') }}">Results</a>
+						</li>
+						<li class="nav-item">
                             <a class="nav-link {% if request.path == '/settings' %} active {% endif %}" href="{{ url_for('quiz.settings') }}">Quiz settings</a>
 						</li>
                         <li class="nav-item">

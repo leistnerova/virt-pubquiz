@@ -6,6 +6,7 @@ $(document).ready(function(){
             type: 'POST',
             success: function (data) {
                 $('#btn-category').prop('disabled', true);
+                $('#btn-next').prop('disabled', false);
             }
         });
     });
@@ -29,6 +30,8 @@ $(document).ready(function(){
                             $('#next-item').html(data['html']);
                             if (!data['question_id']) {
                                 $('#btn-next').hide();
+                                $('#btn-reload').show();
+                                $('#next-item').hide();
                             }
                         }
                     });
@@ -38,6 +41,7 @@ $(document).ready(function(){
                             if (data['next_category_id'] && data['actual_category_id'] != data['next_category_id']) {
                                 $('#btn-category').prop('disabled', false);
                                 $('#btn-category').show();
+                                $('#btn-next').prop('disabled', true);
                             }
                             else {
                                 $('#btn-category').hide();

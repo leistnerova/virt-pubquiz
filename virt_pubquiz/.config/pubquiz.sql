@@ -83,3 +83,9 @@ create table team_answers (
     points int default 0,
     primary key (team_id, question_id)
 );
+
+create view team_answers_all as 
+    select a.*, t.name as team, q.title as question
+    from team_answers a
+    left join questions q on (q.question_id = a.question_id)
+    left join teams t on (t.team_id = a.team_id);

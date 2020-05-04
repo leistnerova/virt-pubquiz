@@ -11,26 +11,26 @@
 
 <div class="container">
     <div class="col-md-12 text-right px-4 py-4">
+        <form method="POST" >
         
-        <button type="button" id="btn-category" class="btn btn-md btn-primary" {% if show_category_id %}disabled{%
-            endif %} {% if actual_item.category_id == next_item.category_id %}style="display: none"{% endif %}>Show category</button>
-        {% if not countdown_started %}
-        <button type="button" id="btn-countdown" class="btn btn-md btn-primary">Start countdown</button>
-        {% endif %}
         {% if next_item %}
-        <button type="button" id="btn-next" class="btn btn-md btn-info" {% if countdown %}disabled{% endif %}>Next</button>
+        <button type="button" id="btn-category" class="btn btn-md btn-primary" {% if show_category_id %}disabled{% endif %} {% if actual_item.category_id == next_item.category_id %}style="display: none"{% endif %}>Show category</button>
         {% endif %}
+        <button type="button" id="btn-countdown" class="btn btn-md btn-primary">Start countdown</button>
+        {% if next_item %}
+        <button type="button" id="btn-next" class="btn btn-md btn-info" {% if actual_item.category_id != next_item.category_id %}disabled{% endif %}>Next</button>
+        {% endif %}
+        <button type="submit" id="btn-reload" class="btn btn-md btn-success" name="reload" value="reload" {% if next_item %}style="display: none"{% endif %}>Reload</button>
+        </form>
     </div>
 </div>
 
 <div class="container">
     {% set item = next_item %}
-    <div id='next-item'>
     {% if next_item %}
-    {% include "run/item.html" %}
-    {% else %}
-    <h2> Finish </h2>
-    </div>
+        <div id='next-item'>
+        {% include "run/item.html" %}
+        </div>
     {% endif %}
 </div>
 

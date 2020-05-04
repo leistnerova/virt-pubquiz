@@ -5,6 +5,7 @@ from flask_login import login_required
 
 from .utils.quiz import QuizFactory, QuizImport
 from .utils.run import QuizRunAdmin
+from .utils.team import Team, TeamsList
 
 quiz = Blueprint('quiz', __name__)
 
@@ -44,11 +45,14 @@ def import_quiz():
     return redirect(url_for('quiz.settings'))
 
 
-@quiz.route('/run_quiz')
+@quiz.route('/run_quiz', methods=['POST', 'GET'])
 @login_required
 def run():
     quiz = QuizFactory().get_actual_quiz()
     run = QuizRunAdmin(quiz)
+    if request.method == 'POST' and request.form.get('reload', 0):
+        run.init_run()
+        app.logger.info('Run was reloader')
     run.load_items()
     if quiz.is_active:
         return render_template(
@@ -76,3 +80,26 @@ def activate():
     run = QuizRunAdmin(quiz)
     run.init_run()
     return redirect(url_for('quiz.run'))
+
+
+@quiz.route('/results', methods=['POST', 'GET'])
+@login_required
+def results():
+    teams_list = TeamsList()
+    if request.method == 'POST':
+        team_active = int(request.form['team_id'])
+        tt = Team(team_active)
+        tt.load_answers()
+        for answer in tt.answers:
+            answer.points = request.form['answer_' + str(answer.question_id) + '_points']
+            answer.save()
+        flash('Results were saved')
+    else:
+        team_active = teams_list.teams[0].team_id
+    for team in teams_list.teams:
+        team.load_answers()
+    return render_template(
+        'result/eval.html',
+        teams=teams_list.teams,
+        team_active=team_active
+    )

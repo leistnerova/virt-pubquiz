@@ -1,5 +1,5 @@
 from .. import db
-from ..model import Teams, TeamAnswers, TeamUsers
+from ..model import Teams, TeamAnswers, TeamAnswersAll, TeamUsers
 from . import Utils
 from .quiz import QuizFactory
 
@@ -10,7 +10,7 @@ class TeamsList:
 
     def __init__(self, quiz=None, full=False):
         if not quiz:
-            quiz = QuizFactory().get_actual_quiz(full=True)
+            quiz = QuizFactory().get_actual_quiz()
         self.quiz_id = quiz.quiz_id
         self.teams = []
         if self.quiz_id:
@@ -34,13 +34,17 @@ class Team:
     editor = None
     users = []
     users_str = ''
+    answers = []
+    points = 0
 
-    def __init__(self, quiz_id, name, team_id=None):
+    def __init__(self, quiz_id=None, name=None, team_id=None):
         self.team_id = team_id
         self.quiz_id = quiz_id
         self.name = name
         self.users = []
-        self.self_str = ''
+        self.users_str = ''
+        self.answers = []
+        self.points = 0
 
     def load_users(self):
         if self.team_id:
@@ -64,6 +68,16 @@ class Team:
 
     def get_users(self):
         return ', '.join(self.users)
+
+    def load_answers(self):
+        self.answers = []
+        if self.team_id:
+            for answer in db.session.query(TeamAnswersAll).filter_by(team_id=self.team_id).order_by(TeamAnswersAll.question_id):
+                new_answer = Answer()
+                Utils.set_vars(new_answer, answer)
+                self.answers.append(new_answer)
+                if answer.points:
+                    self.points += answer.points
 
 
 class TeamUser:

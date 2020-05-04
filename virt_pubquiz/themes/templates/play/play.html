@@ -4,7 +4,7 @@
 
 <div class="container mt-4">
     <h3>{{ team.name }} - {{ session['team_user'] }}</h3>
-    <div id="team_members"><p>Members: {{ team.users_str }}</p></div>
+    <div id="team_members"><p>Members: <span id="members">{{ team.users_str }}</span></p></div>
 </div>
 
 <div class="container">
@@ -32,12 +32,12 @@
                 <div class="form-group mr-4" style="width: 80%">
                     <input id="answer" class=" w-100" type="text" name="answer" autofocus="" {% if not session['editor'] %}disabled{% endif %}/>
                 </div>
-                {% if session['editor'] %}
                 <div class="form-group text-nowrap">
                 <button id="btn-countdown" class="btn btn-primary" style="display: none" disabled></button>
+                {% if session['editor'] %}
                 <button id="btn-update" class="btn btn-primary" >Update</button>
-                </div>
                 {% endif %}
+                </div>
             </div>
         </div>
     </form>
