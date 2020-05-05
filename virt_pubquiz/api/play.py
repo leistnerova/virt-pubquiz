@@ -30,7 +30,7 @@ class PlayActual(Resource):
                 else:
                     res['html'] = render_template('play/no_active.html')
         else:
-            res['html'] = render_template('run/no_run.html')
+            res['html'] = render_template('play/no_run.html')
         return res
 
 

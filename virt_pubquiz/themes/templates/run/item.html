@@ -1,5 +1,12 @@
 <div class="card {% if item.actual %}border-success{% else %}border-info{% endif %} mb-2 pb-2">
-    <div class="card-header">{{ item.title }}</div>
+    <div class="card-header">
+        <table>
+            <tr>
+                <td class="text-nowrap">{{ item.title }}</td>
+                <!--<td class="w-100 text-right">{{ item.number }} / {{ quiz.questions_count }}</td>-->
+            </tr>
+        </table>
+    </div>
     <div class="card-body">
         {% if item.category %}
         <p class="card-text"> <b>Category</b>: {{ item.category }} </p>

@@ -57,6 +57,7 @@ def run():
     if quiz.is_active:
         return render_template(
             'run/admin.html',
+            quiz=quiz,
             actual_item=run.actual_item,
             next_item=run.next_item,
             show_category_id=run.show_category_id

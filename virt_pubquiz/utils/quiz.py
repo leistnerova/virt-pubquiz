@@ -113,6 +113,7 @@ class QuizBase:
     quiz_type = None
     categories = []
     questions = []
+    questions_count = 0
     from_dir = None
     is_active = None
 
@@ -129,6 +130,9 @@ class QuizDefault(QuizBase):
 
     def __init__(self):
         self.quiz_type = 'default'
+        self.categories = []
+        self.questions = []
+        self. questions_count = 0
 
     def load(self, full=False):
         """
@@ -144,14 +148,24 @@ class QuizDefault(QuizBase):
         self.__dict__.update(quiz.__dict__)
         if full:
             self.load_questions()
+            self.questions_count = len(self.questions)
+        else:
+            self.questions_count = db.session.query(QuestionsAll).filter_by(quiz_id=self.quiz_id).count()
 
     def load_questions(self):
         """
         Load quiz questions and categories from database
         """
+        self.questions = []
+        self.categories = []
         if self.quiz_id:
             self.categories = db.session.query(Categories).filter_by(quiz_id=self.quiz_id)
-            self.questions = db.session.query(QuestionsAll).filter_by(quiz_id=self.quiz_id)
+            number = 1
+            qs = db.session.query(QuestionsAll).filter_by(quiz_id=self.quiz_id).order_by(QuestionsAll.category_id, QuestionsAll.question_id)
+            for question in qs:
+                question.number = number
+                self.questions.append(question)
+                number += 1
 
     def import_from_dir(self, from_dir, new_update='new', quiz_def=None):
         """
