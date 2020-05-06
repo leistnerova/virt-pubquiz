@@ -3,7 +3,7 @@ from flask import request, render_template
 from flask_restplus import Namespace, Resource
 
 from .. import db
-from ..model import QuestionsAll, QuizRun
+from ..model import Categories, QuestionsAll, QuizRun, QuizRunDone
 from ..utils import Utils
 from ..utils.run import QuizRunAdmin
 from ..utils.quiz import QuizFactory
@@ -34,6 +34,8 @@ class Run(Resource):
             new_run.show_category_id = None
             db.session.delete(run)
             db.session.add(new_run)
+            new_done = QuizRunDone(question_id=run.question_actual)
+            db.session.add(new_done)
             db.session.commit()
             return {'result': 'OK'}
         return {'result': None}
@@ -42,11 +44,13 @@ class Run(Resource):
 @run_ns.route('/actual')
 class RunActual(Resource):
     def get(self):
-        run = db.session.query(QuizRun).first()
-        if run:
-            item = db.session.query(QuestionsAll).filter_by(question_id=run.question_actual).first()
-            item.actual = True
-            return {'question_id': run.question_actual, 'html': render_template('run/item.html', item=item)}
+        quiz = QuizFactory().get_actual_quiz()
+        run = QuizRunAdmin(quiz)
+        run.load_items()
+        if run.actual_item:
+            return {
+                'question_id': run.actual_item.question_id,
+                'html': render_template('run/item.html', item=run.actual_item, run=run, quiz=quiz)}
         return None
 
 
@@ -87,7 +91,13 @@ class RunCategory(Resource):
         quiz = QuizFactory().get_actual_quiz()
         run = QuizRunAdmin(quiz)
         run.load_items()
-        res = {'actual_category_id': run.actual_item.category_id}
+        res = {
+            'actual_category_id': run.actual_item.category_id,
+        }
+        if run.actual_item.category_id:
+            item = db.session.query(Categories).filter_by(category_id=run.actual_item.category_id).first()
+            item.title = item.name
+            res['html'] = render_template('run/item.html', item=item)
         if run.next_item:
             res['next_category_id'] = run.next_item.category_id
         return res

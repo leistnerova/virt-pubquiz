@@ -16,7 +16,7 @@
         {% if next_item %}
         <button type="button" id="btn-category" class="btn btn-md btn-warning ml-2" {% if show_category_id %}disabled{% endif %} {% if actual_item.category_id == next_item.category_id %}style="display: none"{% endif %}>Show category</button>
         {% endif %}
-        <button type="button" id="btn-countdown" class="btn btn-md btn-primary ml-2">Start countdown</button>
+        <button type="button" id="btn-countdown" class="btn btn-md btn-primary ml-2" {% if show_category_id %}style="display: none"{% endif %}>Start countdown</button>
         {% if next_item %}
         <button type="button" id="btn-next" class="btn btn-md btn-success ml-2" {% if actual_item.category_id != next_item.category_id %}disabled{% endif %}>Next</button>
         {% endif %}

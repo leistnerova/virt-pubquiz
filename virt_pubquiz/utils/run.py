@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from .. import db
-from ..model import Categories, QuestionsAll, QuizRun
+from ..model import Categories, QuestionsAll, QuizRun, QuizRunDone
 
 
 class QuizRunAdmin:
@@ -10,11 +10,13 @@ class QuizRunAdmin:
     next_item = None
     show_category_id = None
     question_start = None
+    questions_done = 0
 
     def __init__(self, quiz):
         self.quiz = quiz
 
     def init_run(self):
+        db.session.query(QuizRunDone).delete()
         db.session.query(QuizRun).delete()
         item_actual = self.quiz.get_next_question()
         run = QuizRun()
@@ -37,6 +39,7 @@ class QuizRunAdmin:
             self.next_item = db.session.query(QuestionsAll).filter_by(question_id=run.question_next).first()
         self.question_start = run.question_start
         self.show_category_id = run.show_category_id
+        self.questions_done = db.session.query(QuizRunDone).count()
 
     def get_countdown(self):
         run = db.session.query(QuizRun).first()

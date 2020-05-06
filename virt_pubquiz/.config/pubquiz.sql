@@ -89,3 +89,7 @@ create view team_answers_all as
     from team_answers a
     left join questions q on (q.question_id = a.question_id)
     left join teams t on (t.team_id = a.team_id);
+
+create table quiz_run_done (
+    question_id int NOT NULL REFERENCES questions(question_id) ON DELETE CASCADE
+);
