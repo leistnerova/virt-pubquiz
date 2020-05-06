@@ -13,8 +13,8 @@ quiz = Blueprint('quiz', __name__)
 @quiz.route('/settings', methods=['POST', 'GET'])
 @login_required
 def settings():
-    quiz = QuizFactory().get_actual_quiz(full=True)
     if request.method == 'POST':
+        quiz = QuizFactory().get_actual_quiz()
         is_active = request.form.get('is_active', 0)
         if quiz.is_active == 1 and not is_active:
             run = QuizRunAdmin(quiz)
@@ -24,6 +24,7 @@ def settings():
         quiz.is_active = is_active
         quiz.save()
         flash('Quiz attributes were updated.')
+    quiz = QuizFactory().get_actual_quiz(full=True)
     import_dirs = QuizImport().get_dirs()
     return render_template(
         'quiz_settings.html',
@@ -66,6 +67,7 @@ def run():
         category.title = category.name
         return render_template(
             'run/init.html',
+            quiz=quiz,
             category=category,
             show_category_id=run.show_category_id
         )

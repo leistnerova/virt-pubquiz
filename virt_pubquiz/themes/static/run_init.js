@@ -6,6 +6,7 @@ $(document).ready(function(){
             type: 'POST',
             success: function (data) {
                 $('#btn-category').prop('disabled', true);
+                $('#btn-activate').prop('disabled', false);
             }
         });
     });
