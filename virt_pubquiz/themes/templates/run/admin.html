@@ -14,13 +14,13 @@
         <form method="POST" >
         
         {% if next_item %}
-        <button type="button" id="btn-category" class="btn btn-md btn-primary" {% if show_category_id %}disabled{% endif %} {% if actual_item.category_id == next_item.category_id %}style="display: none"{% endif %}>Show category</button>
+        <button type="button" id="btn-category" class="btn btn-md btn-warning ml-2" {% if show_category_id %}disabled{% endif %} {% if actual_item.category_id == next_item.category_id %}style="display: none"{% endif %}>Show category</button>
         {% endif %}
-        <button type="button" id="btn-countdown" class="btn btn-md btn-primary">Start countdown</button>
+        <button type="button" id="btn-countdown" class="btn btn-md btn-primary ml-2">Start countdown</button>
         {% if next_item %}
-        <button type="button" id="btn-next" class="btn btn-md btn-info" {% if actual_item.category_id != next_item.category_id %}disabled{% endif %}>Next</button>
+        <button type="button" id="btn-next" class="btn btn-md btn-success ml-2" {% if actual_item.category_id != next_item.category_id %}disabled{% endif %}>Next</button>
         {% endif %}
-        <button type="submit" id="btn-reload" class="btn btn-md btn-success" name="reload" value="reload" {% if next_item %}style="display: none"{% endif %}>Reload</button>
+        <button type="submit" id="btn-reload" class="btn btn-md btn-danger ml-2" name="reload" value="reload" {% if next_item %}style="display: none"{% endif %}>Reload</button>
         </form>
     </div>
 </div>

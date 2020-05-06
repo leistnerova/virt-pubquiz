@@ -112,6 +112,7 @@ class QuizBase:
     quiz_id = None
     quiz_type = None
     categories = []
+    categories_count = 0
     questions = []
     questions_count = 0
     from_dir = None
@@ -131,8 +132,9 @@ class QuizDefault(QuizBase):
     def __init__(self):
         self.quiz_type = 'default'
         self.categories = []
+        self.categories_count = 0
         self.questions = []
-        self. questions_count = 0
+        self.questions_count = 0
 
     def load(self, full=False):
         """
@@ -149,7 +151,9 @@ class QuizDefault(QuizBase):
         if full:
             self.load_questions()
             self.questions_count = len(self.questions)
+            self.categories_count = self.categories.count()
         else:
+            self.categories_count = db.session.query(Categories).filter_by(quiz_id=self.quiz_id).count()
             self.questions_count = db.session.query(QuestionsAll).filter_by(quiz_id=self.quiz_id).count()
 
     def load_questions(self):
@@ -202,8 +206,8 @@ class QuizDefault(QuizBase):
                         question = QuestionFactory().get_question(question_def['type']['name'])
                         question._file = question_file
                         question.task = question_def['task']
-                        for i in ('title', 'picture'):
-                            if question_def[i]:
+                        for i in ('title', 'picture', 'time_limit'):
+                            if i in question_def:
                                 setattr(question, i, question_def[i])
                         self.questions.append(question)
 
