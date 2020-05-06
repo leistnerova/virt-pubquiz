@@ -12,11 +12,18 @@ team = Blueprint('team', __name__)
 @team.route('/teams', methods=['POST', 'GET'])
 @login_required
 def list():
-    if request.method == 'POST':
-        quiz = QuizFactory().get_actual_quiz(full=True)
-        if quiz:
-            team = Team(quiz_id=quiz.quiz_id, name=request.form['name'])
-            team.save()
+    if request.method == 'POST' and request.form['name'] :
+        teams_list = TeamsList()
+        team_name = request.form['name'].strip()
+        team_exist = False
+        for team in teams_list.teams:
+            if team.name == team_name:
+                team_exist = True
+        if not team_exist:
+            quiz = QuizFactory().get_actual_quiz(full=True)
+            if quiz:
+                team = Team(quiz_id=quiz.quiz_id, name=team_name)
+                team.save()
     teams_list = TeamsList(full=True)
     return render_template(
         'teams.html',

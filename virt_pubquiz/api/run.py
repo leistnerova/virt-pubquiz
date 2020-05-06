@@ -76,7 +76,7 @@ class RunCountdown(Resource):
     def get(self):
         quiz = QuizFactory().get_actual_quiz()
         number = QuizRunAdmin(quiz).get_countdown()
-        if number >= 0:
+        if number is not None:
             return {'countdown': number}
         return None
 

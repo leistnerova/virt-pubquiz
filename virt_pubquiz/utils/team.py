@@ -45,8 +45,12 @@ class Team:
         self.users_str = ''
         self.answers = []
         self.points = 0
+        if (team_id):
+            team = db.session.query(Teams).filter_by(team_id=team_id).first()
+            self.name = team.name
 
     def load_users(self):
+        self.users = []
         if self.team_id:
             for user in db.session.query(TeamUsers).filter_by(team_id=self.team_id):
                 if user.editor:

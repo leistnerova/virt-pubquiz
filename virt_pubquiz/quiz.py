@@ -57,7 +57,6 @@ def run():
     if quiz.is_active:
         return render_template(
             'run/admin.html',
-            quiz=quiz,
             actual_item=run.actual_item,
             next_item=run.next_item,
             show_category_id=run.show_category_id
@@ -89,12 +88,13 @@ def results():
     teams_list = TeamsList()
     if request.method == 'POST':
         team_active = int(request.form['team_id'])
-        tt = Team(team_active)
+        tt = Team(team_id=team_active)
         tt.load_answers()
         for answer in tt.answers:
             answer.points = request.form['answer_' + str(answer.question_id) + '_points']
+            app.logger.info(answer)
             answer.save()
-        flash('Results were saved')
+        flash('Results for {} were saved'.format(tt.name))
     else:
         team_active = teams_list.teams[0].team_id
     for team in teams_list.teams:
