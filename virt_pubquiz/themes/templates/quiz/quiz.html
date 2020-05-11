@@ -1,12 +1,8 @@
 
 <div role="tabpanel" class="tab-pane settings-section active mt-4" id="quiz">
-    {% with messages = get_flashed_messages() %}
-        {% for message in messages %}
-            <div class="alert alert-success alert-dismissable" role="alert">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endwith %}
+
+    {% include "messages.html" %}
+
     <h1>Quiz settings</h1>
     <hr>
 

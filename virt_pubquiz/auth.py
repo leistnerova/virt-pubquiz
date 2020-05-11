@@ -17,7 +17,7 @@ def login():
     if request.method == 'POST':
         user = Users.query.filter_by(name=request.form['name'].strip()).first()
         if not user or not check_password_hash(user.password, request.form['password']):
-            flash('Wrong login name or password')
+            flash('Wrong login name or password', 'danger')
             return redirect(url_for('auth.login'))
         login_user(user)
         return redirect(url_for('main.index'))

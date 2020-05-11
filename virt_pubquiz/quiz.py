@@ -23,7 +23,7 @@ def settings():
         quiz.time_limit = request.form['time_limit']
         quiz.is_active = is_active
         quiz.save()
-        flash('Quiz attributes were updated.')
+        flash('Quiz attributes were updated.', 'success')
     quiz = QuizFactory().get_actual_quiz(full=True)
     import_dirs = QuizImport().get_dirs()
     return render_template(
@@ -42,7 +42,7 @@ def import_quiz():
     )
     quiz.save(full=True)
     app.logger.info('Quiz %s imported'.format(quiz.quiz_id))
-    flash('Quiz was imported')
+    flash('Quiz was imported', 'success')
     return redirect(url_for('quiz.settings'))
 
 
