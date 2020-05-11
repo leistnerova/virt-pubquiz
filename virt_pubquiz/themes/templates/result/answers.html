@@ -1,5 +1,7 @@
+<div id="message">
+</div>
+
 <form method="POST"  class="w-100">
-    <input type="hidden" name="team_id" value="{{ team.team_id }}" />
     <table class="table table-striped">
         <thead>
         <tr>
@@ -14,11 +16,10 @@
                 <td>{{ answer.question }}</td>
                 <td>{{ answer.answer }}</td>
                 <td>
-                    <input name="answer_{{ answer.question_id }}_points" type="number" value="{% if answer.points %}{{ answer.points }}{% else %}0{% endif %}" min="0" style="width: 55px">
+                    <input name="answer_{{ answer.question_id }}_points" type="number" value="{% if answer.points %}{{ answer.points }}{% else %}0{% endif %}" min="0" style="width: 55px" onchange="save_points({{ team.team_id }}, {{ answer.question_id }},this.value)">
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-    <button type="submit" name="update" class="btn btn-primary float-right">Update</button>
 </form>

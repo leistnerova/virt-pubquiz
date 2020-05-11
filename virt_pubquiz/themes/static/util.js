@@ -33,3 +33,25 @@ function update_countdown(interval) {
     clearInterval(window.countdown)
     window.countdown = setInterval(run_countdown, interval);
 }
+
+function save_points(team_id, question_id, points) {
+    $('#message').html('');
+    $.ajax({
+        url: '/api/teams/' + team_id + '/answers/' + question_id + '/points',
+        data: {'points': points},
+        type: 'POST',
+        success: function (data) {
+            if (data['result'] != 'OK') {
+                $('#message').html(data['error']);
+            }
+            else {
+                $.ajax({
+                    url: '/api/teams/' + team_id + '/points',
+                    success: function (data) {
+                        $('#team_' + team_id + '_points').html(data);
+                    }
+                })
+            }
+        }
+    })
+}

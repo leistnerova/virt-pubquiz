@@ -2,20 +2,11 @@
 
 {% block content %}
 
-{% with messages = get_flashed_messages() %}
-    {% for message in messages %}
-        <div class="alert alert-success alert-dismissable mt-4" role="alert">
-            {{ message }}
-        </div>
-    {% endfor %}
-{% endwith %}
-
-
 <div class="container mt-4">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
     {% for team in teams %}
         <li class="nav-item">
-            <a class="nav-link {% if team_active == team.team_id %}active{% endif %}" id="tab-team-{{ team.team_id }}" data-toggle="tab" href="#team-{{ team.team_id }}" role="tab" aria-controls="team-{{ team.team_id }}" aria-selected="{% if team_active == team.team_id %}true{% else %}false{% endif %}">{{ team.name }} [{{ team.points }}]</a>
+            <a class="nav-link {% if team_active == team.team_id %}active{% endif %}" id="tab-team-{{ team.team_id }}" data-toggle="tab" href="#team-{{ team.team_id }}" role="tab" aria-controls="team-{{ team.team_id }}" aria-selected="{% if team_active == team.team_id %}true{% else %}false{% endif %}">{{ team.name }} [<span id="team_{{ team.team_id }}_points">{{ team.points }}</span>]</a>
         </li>
     {% endfor %}
     </ul>
@@ -32,4 +23,5 @@
 {% endblock %}
 
 {% block scripts %}
+    <script src="{{ url_for('static', filename='util.js') }}"></script>
 {% endblock %}
