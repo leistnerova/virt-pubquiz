@@ -97,3 +97,7 @@ class TeamAnswersAll(db.Model):
     points = db.Column(db.Integer)
     team = db.Column(db.String(256))
     question = db.Column(db.String(256))
+
+
+class QuizRunDone(db.Model):
+    question_id = db.Column(db.Integer, nullable=False, primary_key=True)

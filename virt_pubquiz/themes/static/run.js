@@ -7,6 +7,14 @@ $(document).ready(function(){
             success: function (data) {
                 $('#btn-category').prop('disabled', true);
                 $('#btn-next').prop('disabled', false);
+                $('#btn-countdown').hide();
+
+                $.ajax({
+                    url: '/api/run/category',
+                    success: function (data) {
+                        $('#actual-item').html(data['html']);
+                    }
+                });
             }
         });
     });
@@ -49,6 +57,7 @@ $(document).ready(function(){
                         }
                     });
                     stop_countdown();
+                    $('#btn-countdown').show();
                     $('#btn-countdown').text('Start countdown');
                     $('#btn-countdown').prop('disabled', false);
                 }

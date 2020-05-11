@@ -56,9 +56,17 @@ def run():
         app.logger.info('Run was reloader')
     run.load_items()
     if quiz.is_active:
+        if run.show_category_id:
+            item = quiz.get_next_category()
+            item.title = item.name
+            item.actual = True
+        else:
+            item = run.actual_item
         return render_template(
             'run/admin.html',
-            actual_item=run.actual_item,
+            quiz=quiz,
+            run=run,
+            actual_item=item,
             next_item=run.next_item,
             show_category_id=run.show_category_id
         )
@@ -67,7 +75,6 @@ def run():
         category.title = category.name
         return render_template(
             'run/init.html',
-            quiz=quiz,
             category=category,
             show_category_id=run.show_category_id
         )
