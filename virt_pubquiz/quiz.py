@@ -5,7 +5,7 @@ from flask_login import login_required
 
 from .utils.quiz import QuizFactory, QuizImport
 from .utils.run import QuizRunAdmin
-from .utils.team import Team, TeamsList
+from .utils.team import TeamsList
 
 quiz = Blueprint('quiz', __name__)
 
@@ -41,7 +41,7 @@ def import_quiz():
         new_update=request.form['new_update']
     )
     quiz.save(full=True)
-    app.logger.info('Quiz %s imported'.format(quiz.quiz_id))
+    app.logger.info('Quiz {} imported'.format(quiz.quiz_id))
     flash('Quiz was imported', 'success')
     return redirect(url_for('quiz.settings'))
 
@@ -91,25 +91,14 @@ def activate():
     return redirect(url_for('quiz.run'))
 
 
-@quiz.route('/results', methods=['POST', 'GET'])
+@quiz.route('/results')
 @login_required
 def results():
     teams_list = TeamsList()
-    if request.method == 'POST':
-        team_active = int(request.form['team_id'])
-        tt = Team(team_id=team_active)
-        tt.load_answers()
-        for answer in tt.answers:
-            answer.points = request.form['answer_' + str(answer.question_id) + '_points']
-            app.logger.info(answer)
-            answer.save()
-        flash('Results for {} were saved'.format(tt.name))
-    else:
-        team_active = teams_list.teams[0].team_id
     for team in teams_list.teams:
         team.load_answers()
     return render_template(
         'result/eval.html',
         teams=teams_list.teams,
-        team_active=team_active
+        team_active=teams_list.teams[0].team_id
     )
