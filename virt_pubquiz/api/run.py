@@ -48,9 +48,13 @@ class RunActual(Resource):
         run = QuizRunAdmin(quiz)
         run.load_items()
         if run.actual_item:
-            return {
+            res = {
                 'question_id': run.actual_item.question_id,
-                'html': render_template('run/item.html', item=run.actual_item, run=run, quiz=quiz)}
+                'html': render_template('run/item.html', item=run.actual_item, run=run, quiz=quiz)
+            }
+            if quiz.status == 'results':
+                res['answer'] = render_template('run/answer.html', item=run.actual_item)
+            return res
         return None
 
 
@@ -94,10 +98,9 @@ class RunCategory(Resource):
         res = {
             'actual_category_id': run.actual_item.category_id,
         }
-        if run.actual_item.category_id:
-            item = db.session.query(Categories).filter_by(category_id=run.actual_item.category_id).first()
-            item.title = item.name
-            res['html'] = render_template('run/item.html', item=item)
+        if run.show_category_id or run.actual_item.category_id:
+            item = run.get_category()
+            res['html'] = render_template('run/item.html', item=item, run=run, quiz=quiz)
         if run.next_item:
             res['next_category_id'] = run.next_item.category_id
         return res

@@ -116,7 +116,7 @@ class QuizBase:
     questions = []
     questions_count = 0
     from_dir = None
-    is_active = None
+    status = None
 
     def get_db_obj(self):
         res = self._model()
@@ -206,6 +206,7 @@ class QuizDefault(QuizBase):
                         question = QuestionFactory().get_question(question_def['type']['name'])
                         question._file = question_file
                         question.task = question_def['task']
+                        question.answer = question_def['answer']
                         for i in ('title', 'picture', 'time_limit'):
                             if i in question_def:
                                 setattr(question, i, question_def[i])

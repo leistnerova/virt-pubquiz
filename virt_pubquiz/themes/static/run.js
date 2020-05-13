@@ -8,6 +8,7 @@ $(document).ready(function(){
                 $('#btn-category').prop('disabled', true);
                 $('#btn-next').prop('disabled', false);
                 $('#btn-countdown').hide();
+                $('#answer').hide();
 
                 $.ajax({
                     url: '/api/run/category',
@@ -30,6 +31,10 @@ $(document).ready(function(){
                         url: '/api/run/actual',
                         success: function (data) {
                             $('#actual-item').html(data['html']);
+                            if (data['answer']) {
+                                $('#answer').html(data['answer']);
+                                $('#answer').show();
+                            }
                         }
                     });
                     $.ajax({

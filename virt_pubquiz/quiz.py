@@ -15,13 +15,15 @@ quiz = Blueprint('quiz', __name__)
 def settings():
     if request.method == 'POST':
         quiz = QuizFactory().get_actual_quiz()
-        is_active = request.form.get('is_active', 0)
-        if quiz.is_active == 1 and not is_active:
+        status = 'active' if request.form.get('is_active', 0) else ''
+        if quiz.status and not status:
             run = QuizRunAdmin(quiz)
             run.init_run()
         quiz.title = request.form['title']
         quiz.time_limit = request.form['time_limit']
-        quiz.is_active = is_active
+        if not quiz.status or not status:  # do not rewrite existing status to 'active'
+            quiz.status = status
+        app.logger.info(quiz.status)
         quiz.save()
         flash('Quiz attributes were updated.', 'success')
     quiz = QuizFactory().get_actual_quiz(full=True)
@@ -51,15 +53,22 @@ def import_quiz():
 def run():
     quiz = QuizFactory().get_actual_quiz()
     run = QuizRunAdmin(quiz)
-    if request.method == 'POST' and request.form.get('reload', 0):
-        run.init_run()
-        app.logger.info('Run was reloader')
+    if request.method == 'POST':
+        if request.form.get('results', 0):
+            run.init_run()
+            quiz.status = 'results'
+            quiz.save()
+            app.logger.info('Moved to results')
+        if request.form.get('deactivate', 0):
+            run.delete_run()
+            quiz.status = ''
+            quiz.save()
+            run = QuizRunAdmin(quiz)
+            app.logger.info('Quiz deactivated')
     run.load_items()
-    if quiz.is_active:
+    if quiz.status != '':
         if run.show_category_id:
-            item = quiz.get_next_category()
-            item.title = item.name
-            item.actual = True
+            item = run.get_category()
         else:
             item = run.actual_item
         return render_template(
@@ -84,10 +93,17 @@ def run():
 @login_required
 def activate():
     quiz = QuizFactory().get_actual_quiz()
-    quiz.is_active = 1
+    quiz.status = 'active'
     quiz.save()
     run = QuizRunAdmin(quiz)
-    run.init_run()
+    run.delete_run()
+    return redirect(url_for('quiz.run'))
+
+
+@quiz.route('/deactivate_quiz', methods=['POST'])
+@login_required
+def deactivate():
+    quiz = QuizFactory().get_actual_quiz()
     return redirect(url_for('quiz.run'))
 
 
