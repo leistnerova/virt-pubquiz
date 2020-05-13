@@ -28,6 +28,11 @@ class QuizRunAdmin:
             db.session.add(run)
             db.session.commit()
 
+    def delete_run(self):
+        db.session.query(QuizRunDone).delete()
+        db.session.query(QuizRun).delete()
+        db.session.commit()
+
     def load_items(self):
         run = db.session.query(QuizRun).first()
         if not run:
@@ -52,3 +57,10 @@ class QuizRunAdmin:
             else:
                 return 0
         return None
+
+    def get_category(self):
+        cat_id = self.show_category_id if self.show_category_id else self.actual_item.category_id
+        item = db.session.query(Categories).filter_by(category_id=cat_id).first()
+        item.title = item.name
+        item.actual = True
+        return item

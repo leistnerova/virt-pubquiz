@@ -24,7 +24,7 @@ class Quizes(db.Model):
     quiz_type = db.Column(db.String(50), nullable=False)
     random_order = db.Column(db.Integer)
     time_limit = db.Column(db.Integer)
-    is_active = db.Column(db.Integer, default=0)
+    status = db.Column(db.String(20))
     from_dir = db.Column(db.String(256))
 
 
@@ -43,6 +43,7 @@ class Questions(db.Model):
     picture = db.Column(db.String(256))
     task = db.Column(db.Text)
     time_limit = db.Column(db.Integer)
+    answer = db.Column(db.String(256))
 
 
 class QuestionsAll(db.Model):
@@ -52,6 +53,7 @@ class QuestionsAll(db.Model):
     picture = db.Column(db.String(256))
     task = db.Column(db.Text)
     time_limit = db.Column(db.Integer)
+    answer = db.Column(db.String(256))
     category_id = db.Column(db.Integer)
     category = db.Column(db.String(256))
     quiz_id = db.Column(db.Integer, nullable=False)

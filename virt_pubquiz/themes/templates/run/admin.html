@@ -10,17 +10,31 @@
 </div>
 
 <div class="container">
+    <div id='answer'>
+    {% if quiz.status == 'results' and not show_category_id %}
+        {% include "run/answer.html" %}
+    {% endif %}
+    </div>
+</div>
+
+<div class="container">
     <div class="col-md-12 text-right px-4 py-4">
         <form method="POST" >
         
         {% if next_item %}
         <button type="button" id="btn-category" class="btn btn-md btn-warning ml-2" {% if show_category_id %}disabled{% endif %} {% if actual_item.category_id == next_item.category_id %}style="display: none"{% endif %}>Show category</button>
         {% endif %}
+        {% if quiz.status != 'results' %}
         <button type="button" id="btn-countdown" class="btn btn-md btn-primary ml-2" {% if show_category_id %}style="display: none"{% endif %}>Start countdown</button>
+        {% endif %}
         {% if next_item %}
         <button type="button" id="btn-next" class="btn btn-md btn-success ml-2" {% if actual_item.category_id != next_item.category_id %}disabled{% endif %}>Next</button>
         {% endif %}
-        <button type="submit" id="btn-reload" class="btn btn-md btn-danger ml-2" name="reload" value="reload" {% if next_item %}style="display: none"{% endif %}>Reload</button>
+        {% if quiz.status != 'results' %}
+            <button type="submit" id="btn-reload" class="btn btn-md btn-danger ml-2" name="results" value="results" {% if next_item %}style="display: none"{% endif %}>Results</button>
+        {% else %}
+            <button type="submit" id="btn-reload" class="btn btn-md btn-danger ml-2" name="deactivate" value="deactivate" {% if next_item %}style="display: none"{% endif %}>Deactivate</button>
+        {% endif %}
         </form>
     </div>
 </div>
