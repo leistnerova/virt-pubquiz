@@ -25,8 +25,8 @@ function start_countdown(interval) {
 
 function stop_countdown() {
     clearInterval(window.countdown)
-    $('#btn-update').prop('disabled', true);;
     $('#answer').prop('disabled', true);;
+    save_answer();
 }
 
 function update_countdown(interval) {
@@ -54,4 +54,27 @@ function save_points(team_id, question_id, points) {
             }
         }
     })
+}
+
+function save_answer() {
+    answer_value = $('#answer').val()
+    if (answer_value) {
+        $.ajax({
+            url: '/api/play/answer/' + $('#team-id').val() + '/' + $('#question-id').val(),
+            data: {'text': answer_value},
+            type: 'POST',
+            success: function (data) {
+                $('#answer-msg').html('Answer was updated.');
+            }
+        });
+    }
+}
+
+function load_answer() {
+    $.ajax({
+        url: '/api/play/answer/' + $('#team-id').val() + '/' + $('#question-id').val(),
+        success: function (data) {
+            $('#answer').val(data);
+        }
+    });
 }

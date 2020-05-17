@@ -1,11 +1,11 @@
-from flask import request, render_template
+from flask import request, render_template, session
 from flask_restplus import Namespace, Resource
 
 from .. import db
-from ..model import Categories, QuestionsAll, QuizRun, Teams
+from ..model import Categories, QuestionsAll, QuizRun, Teams, TeamUsers
 from ..utils.quiz import QuizFactory
 from ..utils.run import QuizRunAdmin
-from ..utils.team import Answer
+from ..utils.team import Answer, TeamsList
 
 play_ns = Namespace('play', description="Endpoint to retrieve play information")
 
@@ -59,3 +59,14 @@ class TeamAnswer(Resource):
             answer.save()
             return {'result': 'OK'}
         return {'result': None}
+
+
+@play_ns.route('/user')
+class TeamUser(Resource):
+    def get(self):
+        if session and session['team_user']:
+            quiz = QuizFactory().get_actual_quiz()
+            teams = TeamsList(quiz=quiz)
+            team = teams.get_team(session['team_id'])
+            return {'name': session['team_user'], 'team': team.name, 'editor': session['editor']}
+        return None

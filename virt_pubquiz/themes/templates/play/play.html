@@ -12,9 +12,6 @@
     </div>
 </div>
 
-<div id="answer-msg" class="container">
-</div>
-
 <div class="container">
     <div id="countdown" class="col-md-12 text-right px-4 py-4">
     </div>
@@ -30,13 +27,11 @@
                     Answer
                 </div>
                 <div class="form-group mr-4" style="width: 80%">
-                    <input id="answer" class=" w-100" type="text" name="answer" autofocus="" {% if not session['editor'] %}disabled{% endif %}/>
+                    <input id="answer" class="form-control w-100" type="text" name="answer" autofocus="" disabled="" />
+                    <small id="answer-msg" class="form-text text-muted"></small>
                 </div>
                 <div class="form-group text-nowrap">
                 <button id="btn-countdown" class="btn btn-primary" style="display: none" disabled></button>
-                {% if session['editor'] %}
-                <button id="btn-update" class="btn btn-primary" >Update</button>
-                {% endif %}
                 </div>
             </div>
         </div>
