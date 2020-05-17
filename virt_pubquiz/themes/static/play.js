@@ -1,22 +1,16 @@
 $(document).ready(function(){
 
     $('#question-id').val('')
-    if ($('#btn-update').length) window.is_editor = true;
-    else window.is_editor = false;
+    $.ajax({
+        url: '/api/play/user',
+        success: function (data) {
+            if (data && data['editor'] == '1') {
+                window.is_editor = true
+            }
+        }
+    });
 
-    if (window.is_editor) {
-        $('#btn-update').click(function(event) {
-            event.preventDefault();
-            $.ajax({
-                url: '/api/play/answer/' + $('#team-id').val() + '/' + $('#question-id').val(),
-                data: {'text': $('#answer').val()},
-                type: 'POST',
-                success: function (data) {
-                    $('#answer-msg').html('<div class="alert alert-success">Answer was updated.</div>');
-                }
-            });
-        });
-    }
+    $('#answer').keyup(save_answer);
 
     setInterval(function() {
 
@@ -29,27 +23,28 @@ $(document).ready(function(){
                 if (data['question_id'] != $('#question-id').val()) {
                     $('#actual-item').html(data['html']);
                     $('#question-id').val(data['question_id']);
+                    answer_div = $('#answer-div')
                     if (data['answer']) {
-                        $('#answer-div').show();
-                        $('#answer-div').html(data['answer']);
+                        answer_div.show();
+                        answer_div.html(data['answer']);
                     }
                     else {
-                        if (window.is_editor) {
-                            $('#btn-update').prop('disabled', false);
+                        answer = $('#answer')
+                        if (window.is_editor && answer.prop('disabled')) {
                             $('#answer').prop('disabled', false);
                         }
-                        $('#answer').val('');
+                        answer.val('');
+                        answer.prop('placeholder', '');
                         stop_countdown()
                         $('#btn-countdown').hide();
                         if (!data['question_id'] || data['question_id'] < 0) {
-                            $('#answer-div').hide();
+                            answer_div.hide();
                         }
                         else {
                             if (window.is_editor) {
-                                $('#btn-update').prop('disabled', true);
-                                $('#answer').prop('disabled', true);
+                                answer.prop('disabled', true);
                             }
-                            $('#answer-div').show();
+                            answer_div.show();
                         }
                     }
                 }
@@ -57,31 +52,37 @@ $(document).ready(function(){
         });
 
         // check if countdown started
-        if (!$('#btn-countdown').is(':visible')) {
+        btn_countdown = $('#btn-countdown');
+        if (!btn_countdown.is(':visible')) {
             $.ajax({
                 url: '/api/run/countdown',
                 success: function (data) {
                     if (data) {
-                        if (window.is_editor) {
-                            $('#btn-update').prop('disabled', false);
-                            $('#answer').prop('disabled', false);
+                        if (window.is_editor && data['countdown'] != 0) {
+                            answer = $('#answer');
+                            load_answer();
+                            if (answer.prop('disabled')) {
+                                answer.prop('disabled', false);
+                                answer.prop('placeholder', 'Type your answer');
+                                answer.focus()
+                            }
                         }
                         $('#btn-countdown').show();
                         $('#btn-countdown').text(data['countdown']);
-                        start_countdown(5000)
+                        if (data['countdown'] != 0) start_countdown(5000)
                     }
                 }
             });
         }
+        else {
+            if (!(window.is_editor && btn_countdown.text() && btn_countdown.text() != '0')) {
+                load_answer();
+            }
+        }
 
         // load answer
         if (!window.is_editor && $('#question-id').val() > 0) {
-            $.ajax({
-                url: '/api/play/answer/' + $('#team-id').val() + '/' + $('#question-id').val(),
-                success: function (data) {
-                    $('#answer').val(data);
-                }
-            });
+            load_answer();
         }
 
         // load members
