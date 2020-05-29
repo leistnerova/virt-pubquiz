@@ -3,7 +3,7 @@ from os.path import isfile, join
 from flask import current_app as app
 from flask import Blueprint
 from flask import abort, render_template, send_file
-from flask_login import current_user
+from flask_login import current_user  # noqa: F401
 
 from .utils.quiz import QuizFactory
 

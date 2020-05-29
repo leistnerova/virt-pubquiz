@@ -4,4 +4,5 @@ max-line-length=120
 exclude=
     .git,
     .gitignore,
+    virt_pubquiz/.config/*.sql
     README
