@@ -3,7 +3,7 @@ from flask import request, render_template
 from flask_restplus import Namespace, Resource
 
 from .. import db
-from ..model import Categories, QuestionsAll, QuizRun, QuizRunDone
+from ..model import QuestionsAll, QuizRun, QuizRunDone
 from ..utils import Utils
 from ..utils.run import QuizRunAdmin
 from ..utils.quiz import QuizFactory

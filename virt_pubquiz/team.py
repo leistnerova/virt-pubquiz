@@ -1,6 +1,5 @@
-from flask import current_app as app
 from flask import Blueprint
-from flask import flash, redirect, render_template, request, url_for
+from flask import render_template, request
 from flask_login import login_required
 
 from .utils.quiz import QuizFactory
@@ -12,7 +11,7 @@ team = Blueprint('team', __name__)
 @team.route('/teams', methods=['POST', 'GET'])
 @login_required
 def list():
-    if request.method == 'POST' and request.form['name'] :
+    if request.method == 'POST' and request.form['name']:
         teams_list = TeamsList()
         team_name = request.form['name'].strip()
         team_exist = False

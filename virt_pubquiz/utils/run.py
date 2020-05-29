@@ -50,7 +50,7 @@ class QuizRunAdmin:
         run = db.session.query(QuizRun).first()
         if run and run.question_start:
             item = db.session.query(QuestionsAll).filter_by(question_id=run.question_actual).first()
-            diff =  datetime.now() - run.question_start
+            diff = datetime.now() - run.question_start
             number = diff.seconds - item.time_limit
             if number < 0:
                 return number * -1

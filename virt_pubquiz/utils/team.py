@@ -76,7 +76,8 @@ class Team:
     def load_answers(self):
         self.answers = []
         if self.team_id:
-            for answer in db.session.query(TeamAnswersAll).filter_by(team_id=self.team_id).order_by(TeamAnswersAll.question_id):
+            ans = db.session.query(TeamAnswersAll).filter_by(team_id=self.team_id).order_by(TeamAnswersAll.question_id)
+            for answer in ans:
                 new_answer = Answer()
                 Utils.set_vars(new_answer, answer)
                 self.answers.append(new_answer)
