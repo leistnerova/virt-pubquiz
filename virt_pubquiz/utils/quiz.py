@@ -94,7 +94,7 @@ class QuizImport:
         try:
             with open(join(from_dir, file_name), 'r') as stream:
                 return yaml.safe_load(stream)
-        except:
+        except Exception:
             pass
         return {}
 
@@ -165,7 +165,9 @@ class QuizDefault(QuizBase):
         if self.quiz_id:
             self.categories = db.session.query(Categories).filter_by(quiz_id=self.quiz_id)
             number = 1
-            qs = db.session.query(QuestionsAll).filter_by(quiz_id=self.quiz_id).order_by(QuestionsAll.category_id, QuestionsAll.question_id)
+            qs = db.session.query(QuestionsAll).filter_by(quiz_id=self.quiz_id).order_by(
+                QuestionsAll.category_id, QuestionsAll.question_id
+            )
             for question in qs:
                 question.number = number
                 self.questions.append(question)
@@ -271,7 +273,8 @@ class QuizDefault(QuizBase):
                 QuestionsAll.quiz_id == self.quiz_id, QuestionsAll.question_id > question_id
             ).order_by(QuestionsAll.question_id.asc()).first()
         else:
-            res = db.session.query(QuestionsAll).filter_by(quiz_id=self.quiz_id).order_by(QuestionsAll.question_id.asc()).first()
+            qq = db.session.query(QuestionsAll).filter_by(quiz_id=self.quiz_id).order_by(QuestionsAll.question_id.asc())
+            res = qq.first()
         return res
 
     def get_next_category(self, question_id=None):

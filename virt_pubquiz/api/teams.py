@@ -36,7 +36,7 @@ class TeamAnswers(Resource):
                 answer.points = int(data['points'])
                 answer.save()
                 return {'result': 'OK'}
-            except:
+            except Exception:
                 app.logger.error(sys.exc_info()[1])
                 return {'result': None, 'error': 'Error saving points'}
         return {'result': None}

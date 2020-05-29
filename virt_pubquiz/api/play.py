@@ -2,7 +2,7 @@ from flask import request, render_template, session
 from flask_restplus import Namespace, Resource
 
 from .. import db
-from ..model import Categories, QuestionsAll, QuizRun, Teams, TeamUsers
+from ..model import Categories, QuestionsAll, Teams
 from ..utils.quiz import QuizFactory
 from ..utils.run import QuizRunAdmin
 from ..utils.team import Answer, TeamsList
