@@ -1,7 +1,7 @@
 $(document).ready(function(){
     $('#btn-category').click(function() {
         $.ajax({
-            url: '/api/run/showcategory',
+            url: 'api/run/showcategory',
             data: {'type': 'next'},
             type: 'POST',
             success: function (data) {
@@ -11,7 +11,7 @@ $(document).ready(function(){
                 $('#answer').hide();
 
                 $.ajax({
-                    url: '/api/run/category',
+                    url: 'api/run/category',
                     success: function (data) {
                         $('#actual-item').html(data['html']);
                     }
@@ -22,13 +22,13 @@ $(document).ready(function(){
 
     $('#btn-next').click(function() {
         $.ajax({
-            url: '/api/run',
+            url: 'api/run',
             data: {'next': '1'},
             type: 'POST',
             success: function (data) {
                 if (data['result'] == 'OK') {
                     $.ajax({
-                        url: '/api/run/actual',
+                        url: 'api/run/actual',
                         success: function (data) {
                             $('#actual-item').html(data['html']);
                             if (data['answer']) {
@@ -38,7 +38,7 @@ $(document).ready(function(){
                         }
                     });
                     $.ajax({
-                        url: '/api/run/next',
+                        url: 'api/run/next',
                         success: function (data) {
                             $('#next-item').html(data['html']);
                             if (!data['question_id']) {
@@ -49,7 +49,7 @@ $(document).ready(function(){
                         }
                     });
                     $.ajax({
-                        url: '/api/run/category',
+                        url: 'api/run/category',
                         success: function (data) {
                             if (data['next_category_id'] && data['actual_category_id'] != data['next_category_id']) {
                                 $('#btn-category').prop('disabled', false);
@@ -72,10 +72,10 @@ $(document).ready(function(){
 
     $('#btn-countdown').click(function() {
         $.ajax({
-            url: '/api/run/start',
+            url: 'api/run/start',
             success: function (data) {
                 $.ajax({
-                    url: '/api/run/countdown',
+                    url: 'api/run/countdown',
                     success: function (data) {
                         $('#btn-countdown').text(data['countdown']);
                     }

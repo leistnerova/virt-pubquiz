@@ -2,7 +2,7 @@ $(document).ready(function(){
 
     $('#question-id').val('')
     $.ajax({
-        url: '/api/play/user',
+        url: 'api/play/user',
         success: function (data) {
             if (data && data['editor'] == '1') {
                 window.is_editor = true
@@ -18,7 +18,7 @@ $(document).ready(function(){
 
         // load actual question/category
         $.ajax({
-            url: '/api/play/actual',
+            url: 'api/play/actual',
             success: function (data) {
                 if (data['question_id'] != $('#question-id').val()) {
                     $('#actual-item').html(data['html']);
@@ -55,7 +55,7 @@ $(document).ready(function(){
         btn_countdown = $('#btn-countdown');
         if (!btn_countdown.is(':visible')) {
             $.ajax({
-                url: '/api/run/countdown',
+                url: 'api/run/countdown',
                 success: function (data) {
                     if (data) {
                         if (window.is_editor && data['countdown'] != 0) {
@@ -87,7 +87,7 @@ $(document).ready(function(){
 
         // load members
         $.ajax({
-            url: '/api/teams/' + $('#team-id').val() + '/members',
+            url: 'api/teams/' + $('#team-id').val() + '/members',
             success: function (data) {
                 $('#members').text(data);
             }
