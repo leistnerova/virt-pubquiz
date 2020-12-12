@@ -94,8 +94,8 @@ class QuizImport:
         try:
             with open(join(from_dir, file_name), 'r') as stream:
                 return yaml.safe_load(stream)
-        except Exception:
-            pass
+        except Exception as ex:
+            app.logger.error(str(ex))
         return {}
 
     def import_file(self, from_dir, file_name, subdir):
@@ -205,14 +205,17 @@ class QuizDefault(QuizBase):
                 if 'questions' in category and category['questions']:
                     for question_file in category['questions']:
                         question_def = import_obj.get_question_def(from_dir, question_file)
-                        question = QuestionFactory().get_question(question_def['type']['name'])
-                        question._file = question_file
-                        question.task = question_def['task']
-                        question.answer = question_def['answer']
-                        for i in ('title', 'picture', 'time_limit'):
-                            if i in question_def:
-                                setattr(question, i, question_def[i])
-                        self.questions.append(question)
+                        if question_def:
+                            question = QuestionFactory().get_question(question_def['type']['name'])
+                            question._file = question_file
+                            question.task = self.parse_text(question_def['task'])
+                            question.answer = question_def['answer']
+                            for i in ('title', 'picture', 'time_limit'):
+                                if i in question_def:
+                                    setattr(question, i, question_def[i])
+                            self.questions.append(question)
+                        else:
+                            app.logger.error('{} not loaded'.format(question_file))
 
         return True
 
@@ -282,3 +285,6 @@ class QuizDefault(QuizBase):
         if question.category_id:
             return db.session.query(Categories).filter_by(category_id=question.category_id).first()
         return None
+
+    def parse_text(self, text):
+        return text.replace('\n', '<br>')

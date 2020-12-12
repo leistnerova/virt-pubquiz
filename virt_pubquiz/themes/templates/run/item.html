@@ -16,13 +16,11 @@
         {% if item.time_limit %}
         <p class="card-text"> <b>Time limit</b>: {{ item.time_limit }} s</p>
         {% endif %}
-        <p class="card-text">
-          <pre>{{ item.task }}</pre>
-        </p>
+        <p class="card-text card-text-main">{{ item.task|safe }}</p>
     </div>
     {% if item.picture %}
     <div class="text-center">
-    <img class="card-img-bottom" src="{{ url_for('main.get_file', name=item.picture) }}" alt="{{ item.picture }}" style="max-width: 50%">
+    <img src="{{ url_for('main.get_file', name=item.picture) }}" alt="{{ item.picture }}" style="max-width: 50%">
     </div>
     {% endif %}
 </div>
