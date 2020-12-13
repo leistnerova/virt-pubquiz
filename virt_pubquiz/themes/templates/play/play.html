@@ -3,8 +3,12 @@
 {% block content %}
 
 <div class="container mt-4">
-    <h3>{{ team.name }} - {{ session['team_user'] }}</h3>
-    <div id="team_members"><p>Members: <span id="members">{{ team.users_str }}</span></p></div>
+    {% if individual %}
+        <h3>{{ team.name }}</h3>
+    {% else %}
+        <h3>{{ team.name }} - {{ session['team_user'] }}</h3>
+        <div id="team_members"><p>Members: <span id="members">{{ team.users_str }}</span></p></div>
+    {% endif %}
 </div>
 
 <div class="container">

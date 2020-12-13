@@ -26,6 +26,7 @@ class Quizes(db.Model):
     time_limit = db.Column(db.Integer)
     status = db.Column(db.String(20))
     from_dir = db.Column(db.String(256))
+    individual = db.Column(db.Integer)
 
 
 class Categories(db.Model):

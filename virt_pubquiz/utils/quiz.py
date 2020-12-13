@@ -117,6 +117,7 @@ class QuizBase:
     questions_count = 0
     from_dir = None
     status = None
+    individual = 0
 
     def get_db_obj(self):
         res = self._model()
@@ -192,6 +193,8 @@ class QuizDefault(QuizBase):
             self.title = quiz_def['title']
             self.time_limit = quiz_def['time_limit']
             self.random_order = int(quiz_def['type']['options']['random_order'])
+            if 'individual' in quiz_def['type']['options']:
+                self.individual = int(quiz_def['type']['options']['individual'])
 
             # get categories and questions
             self.categories = []

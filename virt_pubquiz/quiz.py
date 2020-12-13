@@ -23,6 +23,7 @@ def settings():
         quiz.time_limit = request.form['time_limit']
         if not quiz.status or not status:  # do not rewrite existing status to 'active'
             quiz.status = status
+        quiz.individual = 1 if 'individual' in request.form else 0
         app.logger.info(quiz.status)
         quiz.save()
         flash('Quiz attributes were updated.', 'success')
