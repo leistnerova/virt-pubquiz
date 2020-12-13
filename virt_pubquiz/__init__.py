@@ -44,4 +44,8 @@ def create_app():
     def load_user(user_id):
         return Users.query.get(int(user_id))
 
+    @app.context_processor
+    def get_background_file():
+        return {'background_file': app.config['BACKGROUND_FILE']}
+
     return app

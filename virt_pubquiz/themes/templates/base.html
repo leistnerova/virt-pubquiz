@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.spacelab.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='pubquiz.css') }}">
 </head>
-<body>
+<body style="background: url('{{url_for('static', filename=background_file)}}') no-repeat left bottom;">
 	<nav class="navbar navbar-expand-md navbar-light bg-light static-top">
 		<div class="container">
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#base-navbars"
