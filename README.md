@@ -26,21 +26,27 @@
 # How to use it
 ## Admin view
 Quiz settings - quiz can be imported here.
-![quiz.png][screenshots/quiz.png]
-![categories.png][screenshots/categories.png]
+
+![quiz.png](screenshots/quiz.png)
+
+![categories.png](screenshots/categories.png)
 
 Run quiz
-![run.png][screenshots/run.png]
+
+![run.png](screenshots/run.png)
 
 Teams results
-![teams.png][screenshots/teams.png]
+
+![teams.png](screenshots/teams.png)
 
 ## Player view
 Register as a team player
-![join.png][screenshots/join.png]
+
+![join.png](screenshots/join.png)
 
 And play :)
-![play.png][screenshots/play.png]
+
+![play.png](screenshots/play.png)
 
 # Import quiz
 You can prepare a quiz as a github project and clone it to pubquiz machine. Then it will appear in option to import the quiz.
