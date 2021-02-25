@@ -23,6 +23,25 @@
 # restorecon -v /var/www/wsgi-scripts/virt-pubquiz/virt_pubquiz/files
 ```
 
+# How to use it
+## Admin view
+Quiz settings - quiz can be imported here.
+![quiz.png][screenshots/quiz.png]
+![categories.png][screenshots/categories.png]
+
+Run quiz
+![run.png][screenshots/run.png]
+
+Teams results
+![teams.png][screenshots/teams.png]
+
+## Player view
+Register as a team player
+![join.png][screenshots/join.png]
+
+And play :)
+![play.png][screenshots/play.png]
+
 # Import quiz
 You can prepare a quiz as a github project and clone it to pubquiz machine. Then it will appear in option to import the quiz.
 ## Github project 
@@ -63,3 +82,4 @@ task: |
 answer: answer
 time_limit: 60
 ```
+
