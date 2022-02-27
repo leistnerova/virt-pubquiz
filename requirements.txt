@@ -1,8 +1,8 @@
-werkzeug==0.16.0
+werkzeug
 flask
 flask-sqlalchemy
 flask-login
-flask-restplus
+flask-restx
 flask-session
 psycopg2
 PyYAML

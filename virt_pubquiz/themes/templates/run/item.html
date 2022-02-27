@@ -17,7 +17,7 @@
         <p class="card-text"> <b>Time limit</b>: {{ item.time_limit }} s</p>
         {% endif %}
         <p class="card-text">
-          <pre>{{ item.task }}</pre>
+          {{ item.task | replace("\n", "<br/>") | safe }}
         </p>
     </div>
     {% if item.picture %}

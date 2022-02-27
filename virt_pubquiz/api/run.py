@@ -1,6 +1,6 @@
 from datetime import datetime
 from flask import request, render_template
-from flask_restplus import Namespace, Resource
+from flask_restx import Namespace, Resource
 
 from .. import db
 from ..model import QuestionsAll, QuizRun, QuizRunDone
