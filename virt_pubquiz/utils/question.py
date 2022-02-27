@@ -29,6 +29,7 @@ class QuestionOpen(QuestionBase):
     title = None
     time_limit = None
     picture = None
+    answer_picture = None
 
     def __init__(self):
         self.question_type = 'open'

@@ -22,7 +22,12 @@
     </div>
     {% if item.picture %}
     <div class="text-center">
-    <img class="card-img-bottom" src="{{ url_for('main.get_file', name=item.picture) }}" alt="{{ item.picture }}" style="max-width: 50%">
+
+        {% if quiz and quiz.status == 'results' and item.answer_picture %}
+        <img class="card-img-bottom" src="{{ url_for('main.get_file', name=item.answer_picture) }}" alt="{{ item.answer_picture }}" style="max-width: 50%">
+        {% else %}
+        <img class="card-img-bottom" src="{{ url_for('main.get_file', name=item.picture) }}" alt="{{ item.picture }}" style="max-width: 50%">
+        {% endif %}
     </div>
     {% endif %}
 </div>

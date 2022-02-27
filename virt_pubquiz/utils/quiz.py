@@ -205,11 +205,12 @@ class QuizDefault(QuizBase):
                 if 'questions' in category and category['questions']:
                     for question_file in category['questions']:
                         question_def = import_obj.get_question_def(from_dir, question_file)
+                        print(question_def)
                         question = QuestionFactory().get_question(question_def['type']['name'])
                         question._file = question_file
                         question.task = question_def['task']
                         question.answer = question_def['answer']
-                        for i in ('title', 'picture', 'time_limit'):
+                        for i in ('title', 'picture', 'answer_picture', 'time_limit'):
                             if i in question_def:
                                 setattr(question, i, question_def[i])
                         self.questions.append(question)
@@ -245,6 +246,8 @@ class QuizDefault(QuizBase):
                 question.save()
                 if question.picture:
                     import_obj.import_file(self.from_dir, question.picture, str(self.quiz_id))
+                if question.answer_picture:
+                    import_obj.import_file(self.from_dir, question.answer_picture, str(self.quiz_id))
 
             # categories
             if is_update:
