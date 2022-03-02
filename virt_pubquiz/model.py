@@ -44,7 +44,8 @@ class Questions(db.Model):
     picture = db.Column(db.String(256))
     task = db.Column(db.Text)
     time_limit = db.Column(db.Integer)
-    answer = db.Column(db.String(256))
+    answer = db.Column(db.Text)
+    answer_picture = db.Column(db.String(256))
 
 
 class QuestionsAll(db.Model):
@@ -54,7 +55,8 @@ class QuestionsAll(db.Model):
     picture = db.Column(db.String(256))
     task = db.Column(db.Text)
     time_limit = db.Column(db.Integer)
-    answer = db.Column(db.String(256))
+    answer = db.Column(db.Text)
+    answer_picture = db.Column(db.String(256))
     category_id = db.Column(db.Integer)
     category = db.Column(db.String(256))
     quiz_id = db.Column(db.Integer, nullable=False)

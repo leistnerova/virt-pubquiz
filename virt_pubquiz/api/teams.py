@@ -2,7 +2,7 @@ import sys
 
 from flask import current_app as app
 from flask import request
-from flask_restplus import Namespace, Resource
+from flask_restx import Namespace, Resource
 
 from ..utils.team import Answer, Team
 

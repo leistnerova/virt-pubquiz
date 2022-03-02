@@ -1,5 +1,5 @@
 from flask import request, render_template, session
-from flask_restplus import Namespace, Resource
+from flask_restx import Namespace, Resource
 
 from .. import db
 from ..model import Categories, QuestionsAll, Teams

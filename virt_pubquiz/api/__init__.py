@@ -1,5 +1,5 @@
 from flask import Blueprint
-from flask_restplus import Api
+from flask_restx import Api
 
 from .categories import categories_ns
 from .questions import questions_ns

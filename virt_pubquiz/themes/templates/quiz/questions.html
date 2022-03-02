@@ -41,6 +41,12 @@
                                 {% if question.picture %}
                                 <img src="{{ url_for('main.get_file', name=question.picture) }}" width="100px">
                                 {% endif %}
+                                {% if question.answer_picture %}
+                                <br />
+                                Answer:
+                                <br />
+                                <img src="{{ url_for('main.get_file', name=question.answer_picture) }}" width="100px">
+                                {% endif %}
                             </td>
                             <td>{{ question.category }}</td>
                             <td>{{ question.time_limit }}</td>

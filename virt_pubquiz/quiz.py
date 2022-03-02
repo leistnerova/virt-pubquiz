@@ -104,6 +104,9 @@ def activate():
 @quiz.route('/deactivate_quiz', methods=['POST'])
 @login_required
 def deactivate():
+    quiz = QuizFactory().get_actual_quiz()
+    quiz.status = ''
+    quiz.save()
     return redirect(url_for('quiz.run'))
 
 
