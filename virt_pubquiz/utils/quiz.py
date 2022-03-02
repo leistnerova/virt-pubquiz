@@ -94,8 +94,8 @@ class QuizImport:
         try:
             with open(join(from_dir, file_name), 'r') as stream:
                 return yaml.safe_load(stream)
-        except Exception:
-            pass
+        except Exception as ex:
+            app.logger.error(str(ex))
         return {}
 
     def import_file(self, from_dir, file_name, subdir):
@@ -117,6 +117,7 @@ class QuizBase:
     questions_count = 0
     from_dir = None
     status = None
+    individual = 0
 
     def get_db_obj(self):
         res = self._model()
@@ -192,6 +193,8 @@ class QuizDefault(QuizBase):
             self.title = quiz_def['title']
             self.time_limit = quiz_def['time_limit']
             self.random_order = int(quiz_def['type']['options']['random_order'])
+            if 'individual' in quiz_def['type']['options']:
+                self.individual = int(quiz_def['type']['options']['individual'])
 
             # get categories and questions
             self.categories = []
@@ -205,15 +208,17 @@ class QuizDefault(QuizBase):
                 if 'questions' in category and category['questions']:
                     for question_file in category['questions']:
                         question_def = import_obj.get_question_def(from_dir, question_file)
-                        print(question_def)
-                        question = QuestionFactory().get_question(question_def['type']['name'])
-                        question._file = question_file
-                        question.task = question_def['task']
-                        question.answer = question_def['answer']
-                        for i in ('title', 'picture', 'answer_picture', 'time_limit'):
-                            if i in question_def:
-                                setattr(question, i, question_def[i])
-                        self.questions.append(question)
+                        if question_def:
+                            question = QuestionFactory().get_question(question_def['type']['name'])
+                            question._file = question_file
+                            question.task = self.parse_text(question_def['task'])
+                            question.answer = question_def['answer']
+                            for i in ('title', 'picture', 'answer_picture', 'time_limit'):
+                                if i in question_def:
+                                    setattr(question, i, question_def[i])
+                            self.questions.append(question)
+                        else:
+                            app.logger.error('{} not loaded'.format(question_file))
 
         return True
 
@@ -285,3 +290,6 @@ class QuizDefault(QuizBase):
         if question.category_id:
             return db.session.query(Categories).filter_by(category_id=question.category_id).first()
         return None
+
+    def parse_text(self, text):
+        return text.replace('\n', '<br>')

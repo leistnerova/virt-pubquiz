@@ -36,7 +36,7 @@
                         <tr>
                             <td>{{ question.number }}</td>
                             <td>{{ question.title }}</td>
-                            <td>{{ question.task }}</td>
+                            <td>{{ question.task|safe }}</td>
                             <td>
                                 {% if question.picture %}
                                 <img src="{{ url_for('main.get_file', name=question.picture) }}" width="100px">

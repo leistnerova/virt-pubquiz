@@ -10,26 +10,32 @@ play = Blueprint('play', __name__)
 @play.route('/play', methods=['POST', 'GET'])
 def index():
     quiz = QuizFactory().get_actual_quiz()
-    if request.method == 'POST' and request.form['name']:
-        editor = 0
+    teams = TeamsList(quiz=quiz, full=True)
+    if request.method == 'POST' and (quiz.individual or request.form['name']):
+        if quiz.individual:
+            editor = 1
+            team = teams.get_team(request.form['team_id'])
+            user_name = team.name
+        else:
+            editor = 1 if 'editor' in request.form else 0
+            user_name = request.form['name']
         user = TeamUser()
-        if 'editor' in request.form:
-            editor = request.form['editor']
         user.load(
-            user_name=request.form['name'], team_id=request.form['team_id'], editor=editor
+            user_name=user_name, team_id=request.form['team_id'], editor=editor
         )
         user.save()
         session['team_user'] = user.name
         session['team_id'] = user.team_id
         session['editor'] = user.editor
 
-    teams = TeamsList(quiz=quiz, full=True)
     if 'team_user' not in session or not session['team_user']:
-        return render_template('play/login.html', quiz_name=quiz.title, teams=teams.teams)
+        return render_template(
+            'play/login.html', quiz_name=quiz.title, teams=teams.teams, individual=quiz.individual
+        )
 
     return render_template(
         'play/play.html',
-        team=teams.get_team(session['team_id'])
+        team=teams.get_team(session['team_id']), individual=quiz.individual
     )
 
 

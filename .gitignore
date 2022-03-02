@@ -1,5 +1,3 @@
 *.pyc
-*.jpg
-*.png
 *.swp
 virt_pubquiz/files/*
