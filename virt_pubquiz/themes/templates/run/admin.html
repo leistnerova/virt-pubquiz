@@ -33,6 +33,7 @@
         {% if quiz.status != 'results' %}
             <button type="submit" id="btn-reload" class="btn btn-md btn-danger ml-2" name="results" value="results" {% if next_item %}style="display: none"{% endif %}>Results</button>
         {% else %}
+            <button type="button" id="btn-thanks" class="btn btn-md btn-warning ml-2" name="thanks" value="thanks" {% if show_thanks %}disabled{% endif %} {% if next_item %}style="display: none"{% endif %}>Show Thanks</button>
             <button type="submit" id="btn-reload" class="btn btn-md btn-danger ml-2" name="deactivate" value="deactivate" {% if next_item %}style="display: none"{% endif %}>Deactivate</button>
         {% endif %}
         </form>

@@ -84,4 +84,14 @@ $(document).ready(function(){
             }
         });
     });
+
+    $('#btn-thanks').click(function() {
+        $.ajax({
+            url: 'api/run/showthanks',
+            type: 'GET',
+            success: function (data) {
+                $('#btn-thanks').prop('disabled', true);
+            }
+        });
+    });
 });

@@ -9,6 +9,7 @@ class QuizRunAdmin:
     actual_item = None
     next_item = None
     show_category_id = None
+    show_thanks = None
     question_start = None
     questions_done = 0
 
@@ -44,6 +45,7 @@ class QuizRunAdmin:
             self.next_item = db.session.query(QuestionsAll).filter_by(question_id=run.question_next).first()
         self.question_start = run.question_start
         self.show_category_id = run.show_category_id
+        self.show_thanks = run.show_thanks
         self.questions_done = db.session.query(QuizRunDone).count()
 
     def get_countdown(self):

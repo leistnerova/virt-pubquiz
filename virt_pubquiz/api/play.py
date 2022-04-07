@@ -23,6 +23,8 @@ class PlayActual(Resource):
                 item.title = item.name
                 res['question_id'] = '-2'
                 res['html'] = render_template('run/item.html', item=item)
+            elif run.show_thanks:
+                res['html'] = render_template('run/thanks.html', quiz=quiz)
             else:
                 if quiz.status:
                     res['question_id'] = run.actual_item.question_id
@@ -30,9 +32,9 @@ class PlayActual(Resource):
                     if quiz.status == 'results':
                         res['answer'] = render_template('run/answer.html', item=run.actual_item)
                 else:
-                    res['html'] = render_template('play/no_active.html')
+                    res['html'] = render_template('play/no_active.html', quiz=quiz)
         else:
-            res['html'] = render_template('play/no_run.html')
+            res['html'] = render_template('play/no_run.html', quiz=quiz)
         return res
 
 

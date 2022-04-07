@@ -7,7 +7,7 @@
     {% include "messages.html" %}
 
     <div class="column is-4 is-offset-4 w-50">
-        <h3 class="title">{{ quiz_name }}</h3>
+        <h3 class="title">{{ quiz.title }}</h3>
         <div class="box">
             <form method="POST">
                 <div class="form-group">
@@ -18,7 +18,7 @@
                         {% endfor %}
                     </select>
                 </div>
-                {% if not individual %}
+                {% if not quiz.individual %}
                 <div class="form-group">
                     <label for="name">Your name</label>
                     <input id="name" class="form-control" type="text" name="name" autofocus="">

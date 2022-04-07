@@ -30,12 +30,12 @@ def index():
 
     if 'team_user' not in session or not session['team_user']:
         return render_template(
-            'play/login.html', quiz_name=quiz.title, teams=teams.teams, individual=quiz.individual
+            'play/login.html', quiz=quiz, teams=teams.teams
         )
 
     return render_template(
         'play/play.html',
-        team=teams.get_team(session['team_id']), individual=quiz.individual
+        team=teams.get_team(session['team_id']), quiz=quiz
     )
 
 

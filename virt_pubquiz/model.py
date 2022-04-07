@@ -74,6 +74,7 @@ class QuizRun(db.Model):
     question_next = db.Column(db.Integer, nullable=False)
     question_start = db.Column(db.Date)
     show_category_id = db.Column(db.Integer)
+    show_thanks = db.Column(db.Integer)
 
 
 class Teams(db.Model):

@@ -132,3 +132,11 @@ class RunShowCategory(Resource):
             db.session.commit()
             return {'result': 'OK'}
         return {'result': None}
+
+
+@run_ns.route('/showthanks')
+class RunThanks(Resource):
+    def get(self):
+        run = db.session.query(QuizRun).first()
+        run.show_thanks = 1
+        db.session.commit()

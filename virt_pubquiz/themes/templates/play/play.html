@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="container mt-4">
-    {% if individual %}
+    {% if quiz.individual %}
         <h3>{{ team.name }}</h3>
     {% else %}
         <h3>{{ team.name }} - {{ session['team_user'] }}</h3>

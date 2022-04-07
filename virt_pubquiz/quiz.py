@@ -79,7 +79,8 @@ def run():
             run=run,
             actual_item=item,
             next_item=run.next_item,
-            show_category_id=run.show_category_id
+            show_category_id=run.show_category_id,
+            show_thanks=run.show_thanks
         )
     else:
         category = quiz.get_next_category()

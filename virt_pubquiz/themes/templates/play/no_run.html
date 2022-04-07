@@ -1,4 +1,10 @@
 <div class="container mt-4">
+    <b>{{ quiz.title }}</b>
+    {% if quiz.author %}
+    <br />
+    Author: {{ quiz.author }}
+    {% endif %}
+    <br /><br />
     <div class="alert alert-warning" role="alert">
         There is no started run yet!<br>
         Wait for the administrator to start it.
