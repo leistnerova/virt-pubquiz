@@ -13,6 +13,10 @@
 				<label for="title">Title</label>
                 <input id="title" name="title" type="text" class="form-control" required {% if quiz.title %}value="{{ quiz.title }}"{% endif %}/>
 		</div>
+		<div class="form-group">
+				<label for="author">Author</label>
+                <input id="author" name="author" type="text" class="form-control" required {% if quiz.author %}value="{{ quiz.author }}"{% endif %}/>
+		</div>
 		<div class="form-row">
             <div class="form-group col-md-5">
 				<label for="quiz_type">Type</label>

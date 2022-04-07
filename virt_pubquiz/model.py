@@ -27,6 +27,7 @@ class Quizes(db.Model):
     status = db.Column(db.String(20))
     from_dir = db.Column(db.String(256))
     individual = db.Column(db.Integer)
+    author = db.Column(db.String(256))
 
 
 class Categories(db.Model):

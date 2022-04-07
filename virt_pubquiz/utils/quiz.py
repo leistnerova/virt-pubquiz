@@ -116,6 +116,7 @@ class QuizBase:
     questions = []
     questions_count = 0
     from_dir = None
+    author = None
     status = None
     individual = 0
 
@@ -191,6 +192,7 @@ class QuizDefault(QuizBase):
             if not quiz_def:
                 quiz_def = import_obj.get_quiz_def(from_dir)
             self.title = quiz_def['title']
+            self.author = quiz_def['author']
             self.time_limit = quiz_def['time_limit']
             self.random_order = int(quiz_def['type']['options']['random_order'])
             if 'individual' in quiz_def['type']['options']:

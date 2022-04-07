@@ -20,6 +20,7 @@ def settings():
             run = QuizRunAdmin(quiz)
             run.init_run()
         quiz.title = request.form['title']
+        quiz.author = request.form['author']
         quiz.time_limit = request.form['time_limit']
         if not quiz.status or not status:  # do not rewrite existing status to 'active'
             quiz.status = status
